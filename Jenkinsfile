@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                https://github.com/NRP345/scientific_calculator_Project.git'
+                git 'https://github.com/NRP345/scientific_calculator_Project.git'
             }
         }
         stage('Build Docker Image') {
@@ -15,7 +15,6 @@ pipeline {
                 sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
-        
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
@@ -30,3 +29,4 @@ pipeline {
         }
     }
 }
+
