@@ -1,8 +1,11 @@
+
 pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE = 'nrpatil654/scientific-calculator'
+        ANSIBLE_INVENTORY = '/etc/ansible/hosts'  // Update path as needed
+        ANSIBLE_PLAYBOOK = 'deploy.yml'  // Name of your Ansible playbook
     }
     stages {
         stage('Clone Repository') {
@@ -27,6 +30,10 @@ pipeline {
                 sh 'docker push $DOCKER_IMAGE'
             }
         }
+        stage('Deploy with Ansible') {
+            steps {
+                sh 'ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK'
+            }
+        }
     }
 }
-
