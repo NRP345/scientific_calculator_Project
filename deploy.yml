@@ -1,0 +1,23 @@
+---
+- name: Pull Docker Image of Calculator
+  hosts: all
+
+  tasks:
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Docker Image
+      command: docker pull nrpatil654/scientific-calculator:latest
+
+    - name: Stop and Remove Existing Container (if any)
+      command: docker rm -f Calculator
+      ignore_errors: yes
+
+    - name: Run the Container
+      command: >
+        docker run -d --name Calculator
+        -p 5000:5000 nrpatil654/scientific-calculator:latest
+
