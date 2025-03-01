@@ -13,6 +13,20 @@ pipeline {
                 git 'https://github.com/NRP345/scientific_calculator_Project.git'
             }
         }
+
+        stage('Setup Python Environment') {
+            steps {
+                sh 'python3 -m venv venv'   // Create virtual environment
+                sh 'source venv/bin/activate && pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Unit Tests') {
+            steps {
+                sh 'source venv/bin/activate && python3 -m unittest discover -s tests'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
