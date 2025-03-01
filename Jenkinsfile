@@ -14,14 +14,7 @@ pipeline {
             }
         }
 
-       stage('Setup Python Environment') {
-    steps {
-        sh 'sudo apt update && sudo apt install -y python3-venv'  // Ensure venv is installed
-        sh 'python3 -m venv venv'   // Create virtual environment
-        sh './venv/bin/pip install -r requirements.txt'  // Install dependencies
-    }
-}
-
+      
         stage('Run Unit Tests') {
             steps {
                 sh 'source venv/bin/activate && python3 -m unittest discover -s tests'
