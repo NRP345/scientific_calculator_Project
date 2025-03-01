@@ -15,5 +15,9 @@ class TestScientificCalculator(unittest.TestCase):
         self.assertEqual(power(2, 3), 8)
         self.assertEqual(power(5, 0), 1)
 
+    def test_square_root(self):
+        self.assertEqual(square_root(4), 2)
+        self.assertAlmostEqual(square_root(2), math.sqrt(2))
+
 if __name__ == "__main__":
     unittest.main()
