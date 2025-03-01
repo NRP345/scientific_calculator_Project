@@ -15,16 +15,18 @@ pipeline {
         }
 
       stage('Setup Python Environment') {
-            steps {
-                script {
-                    sh '''
-                    sudo apt update && sudo apt install -y python3-venv
-                    python3 -m venv venv
-                    ./venv/bin/pip install -r requirements.txt
-                    '''
-                }
-            }
+    steps {
+        script {
+            sh '''
+            python3 -m venv venv  # Create virtual environment
+            chmod -R 755 venv  # ✅ Fix permission issues on venv
+            ./venv/bin/python3 -m pip install --upgrade pip setuptools
+            ./venv/bin/python3 -m pip install --no-cache-dir -r requirements.txt
+            '''
         }
+    }
+}
+
 
         stage('Run Unit Tests') {
             steps {
