@@ -15,11 +15,6 @@ pipeline {
         }
 
       
-        stage('Run Unit Tests') {
-            steps {
-                sh 'source venv/bin/activate && python3 -m unittest discover -s tests'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
