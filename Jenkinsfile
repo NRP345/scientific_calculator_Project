@@ -18,12 +18,14 @@ pipeline {
     steps {
         script {
             sh '''
-            python3 -m venv venv  # ✅ Create virtual environment
+            rm -rf venv  # ✅ Remove broken venv
+            python3 -m venv venv  # ✅ Create a new virtual environment
             chmod -R 755 venv  # ✅ Fix permission issues
-
-            # ✅ Ensure pip is installed
-            ./venv/bin/python3 -m ensurepip --default-pip
-
+            
+            # ✅ Manually reinstall pip
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            ./venv/bin/python3 get-pip.py
+            
             # ✅ Upgrade pip and install dependencies
             ./venv/bin/python3 -m pip install --upgrade pip setuptools
             ./venv/bin/python3 -m pip install --no-cache-dir -r requirements.txt
@@ -31,6 +33,7 @@ pipeline {
         }
     }
 }
+
 
 
 
