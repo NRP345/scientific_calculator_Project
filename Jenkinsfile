@@ -68,7 +68,16 @@ pipeline {
                 sh 'docker push $DOCKER_IMAGE'
             }
         }
-        
+        stage('Run Docker Container') {
+    steps {
+        script {
+            sh '''
+            docker run --rm nrpatil654/scientific-calculator:latest 1 25
+            '''
+        }
+    }
+}
+
 stage('Deploy with Ansible') {
     steps {
         sh 'ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK'
