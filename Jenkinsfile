@@ -15,30 +15,32 @@ pipeline {
         }
 
       stage('Setup Python Environment') {
-            steps {
-                script {
-                    sh '''
-                    sudo apt update && sudo apt install -y python3-venv
-                    python3 -m venv venv
-                    ./venv/bin/pip install -r requirements.txt
-                    '''
-                }
-            }
+    steps {
+        script {
+            sh '''
+            python3 -m venv venv  # Create virtual environment
+            chmod -R 755 venv  # ✅ Fix permission issues on venv
+            ./venv/bin/python3 -m pip install --upgrade pip setuptools
+            ./venv/bin/python3 -m pip install --no-cache-dir -r requirements.txt
+            '''
         }
+    }
+}
+
 
         stage('Run Unit Tests') {
-            steps {
-                script {
-                    try {
-                        sh './venv/bin/python3 -m unittest discover -s tests'
-                    } catch (Exception e) {
-                        echo "Unit tests failed. Check the logs for details."
-                        currentBuild.result = 'FAILURE'
-                        error("Stopping pipeline due to test failure")
-                    }
-                }
+    steps {
+        script {
+            try {
+                sh './venv/bin/python3 -m unittest test_scientific_calculator'  // ✅ Runs the correct test file
+            } catch (Exception e) {
+                echo "Unit tests failed. Check logs."
+                currentBuild.result = 'FAILURE'
+                error("Stopping pipeline due to test failure")
             }
         }
+    }
+}
 
         stage('Build Docker Image') {
             steps {
