@@ -74,4 +74,6 @@ stage('Deploy with Ansible') {
         sh 'ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK'
     }
 }
+    }
+}
 
