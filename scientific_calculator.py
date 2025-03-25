@@ -45,7 +45,7 @@ def main():
         print("2. Factorial")
         print("3. Natural Logarithm")
         print("4. Power Function")
-        print("5. Exi")
+        print("5. Exits")
 
         choice = input("Choose an operation (1-5): ")
         if choice in operations:
