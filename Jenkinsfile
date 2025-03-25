@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE = 'nrpatil654/scientific-calculator'
-        ANSIBLE_INVENTORY = '/etc/ansible/hosts'  // Update path as needed
+        ANSIBLE_INVENTORY = 'inventory'  // Update path as needed
         ANSIBLE_PLAYBOOK = 'deploy.yml'  // Name of your Ansible playbook
     }
     stages {
@@ -68,10 +68,7 @@ pipeline {
                 sh 'docker push $DOCKER_IMAGE'
             }
         }
-        environment {
-    ANSIBLE_INVENTORY = 'inventory'
-    ANSIBLE_PLAYBOOK = 'deploy.yml'
-}
+        
 stage('Deploy with Ansible') {
     steps {
         sh 'ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK'
