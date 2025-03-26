@@ -71,11 +71,12 @@ pipeline {
         stage('Run Docker Container') {
     steps {
         script {
-            sh 'docker run --rm ${env.DOCKER_IMAGE} 1 25'  // ✅ Example: Calculate square root of 25
+            sh '''
+            docker run --rm nrpatil654/scientific-calculator:latest 1 25
+            '''
         }
     }
 }
-
 
 stage('Deploy with Ansible') {
     steps {
