@@ -72,7 +72,8 @@ pipeline {
     steps {
         script {
             sh '''
-            docker run --rm nrpatil654/scientific-calculator:latest 1 25
+            docker run -it --rm nrpatil654/scientific-calculator:latest
+
             '''
         }
     }
